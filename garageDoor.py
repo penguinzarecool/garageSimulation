@@ -6,6 +6,10 @@ OPENING = 'opening'
 OPEN = 'open'
 CLOSING = 'closing'
 
+# the events
+BUTTON_PRESSED = 'button pressed'
+LIMIT_TRIPPED = 'limit tripped'
+
 # the states of the system
 x0 = 'x0'
 x1 = 'x1'
@@ -27,6 +31,18 @@ L =   { x0: [CLOSED],
 	x2: [OPEN],
 	x3: [CLOSING]
       }
+
+# define the event function
+E =   { x0: [BUTTON_PRESSED],
+	x1: [LIMIT_TRIPPED],
+	x2: [BUTTON_PRESSED],
+	x3: [LIMIT_TRIPPED]
+      }
+
+#def get_event(current_state):
+	#if current_state == x0 or current_state == x2:
+		#return BUTTON
+	#return LIMIT_TRIPPED
 	
 #---- Define the decision function based on LTL formulas.
 def hold_properties(current_state, next_state):
@@ -50,7 +66,7 @@ def simulate( initial_state, num_steps):
 	print("Starting in state:", current_state)
 	for step in range(1, num_steps):
 		next_state = transition(current_state)
-		print("Step", step,": Transition from ", L[current_state]," to ", L[next_state])
+		print("Step", step, " ", E[current_state], ": Transition from ", L[current_state]," to ", L[next_state])
 		if not hold_properties(current_state, next_state):
 			print("Property violated.")
 			print("Counterexample: ", L[current_state], " -> ", L[next_state], " (violation)")
